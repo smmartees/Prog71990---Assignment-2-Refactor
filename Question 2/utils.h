@@ -5,15 +5,13 @@
 
 
 //C
-int lowInputValidator(int input);
-
-int highInputValidator(int input);
+void createTable(int lowNum, int highNum);
 
 //R
-
+int inputValidator(int inputChecker, int input);
 
 //U
 void inputSort(int* firstInput, int* secondInput);
 
 //D
-void createTable(int lowNum, int highNum);
+void getUserInput(int* inputChecker, int* input);

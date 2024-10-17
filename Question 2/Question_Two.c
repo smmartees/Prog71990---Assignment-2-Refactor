@@ -31,39 +31,29 @@ Output with for loop.*/
 #include "utils.h"
 #include <stdio.h>
 
-#define INVALID_INPUT	2
 
 int main(void) {
 
-	//input
-	int firstInput;				// variable for user's lower / first input
-	int secondInput;				// variable for user's higher / second input
-	int inputChecker;		// checks that the input is an integer
+	int firstInput;				// variable for user's first input
+	int secondInput;			// variable for user's second input
+	int inputChecker;			// checks that the input is an integer
 
 	printf("This program will produce a table of integers and their cubes, squares, and squareroots.\n\n");
-	printf("Please input an integer (between 5 & 25) for the lower range of the table: ");
-	inputChecker = scanf_s("%d", &firstInput);
-	if (inputChecker != 1) {		// checking for integer input
-		printf("\nYour first input was invalid. Please try again with an integer.\n");
-		return INVALID_INPUT;
+	
+	//get input / input validation
+	getUserInput(&inputChecker, &firstInput);
+	int firstInputValidator = inputValidator(inputChecker, firstInput);
+	
+	int secondInputValidator;
+	if (firstInputValidator == 1) {
+		getUserInput(&inputChecker, &secondInput);
+		secondInputValidator = inputValidator(inputChecker, secondInput);
 	}
-	printf("Please input an integer (between 5 & 25) for the upper range of the table: ");
-	inputChecker = scanf_s("%d", &secondInput);
-	if (inputChecker != 1) {	// checking for integer input
-		printf("\nYour second input was invalid. Please try again with an integer.\n");
-		return INVALID_INPUT;
-	}
-
-	if (firstInput > secondInput) {
-		inputSort(&firstInput, &secondInput);
-	}
-
-	//input validation
-	int lowValidator = lowInputValidator(firstInput);
-	int highValidator = highInputValidator(secondInput);
-
+	
 	//processing & output
-	if (lowValidator == 1 && highValidator == 1) {		// checking user input is within parameters 5 & 25 
+	inputSort(&firstInput, &secondInput);
+
+	if (firstInputValidator == 1 && secondInputValidator == 1) {	//if all is well.. 
 		createTable(firstInput, secondInput);
 	}
 
