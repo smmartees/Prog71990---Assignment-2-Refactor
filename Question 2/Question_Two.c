@@ -28,55 +28,43 @@ Output with for loop.*/
 //	assess whether the user input was appropriate.For any inappropriate input,
 //	immediately exit the program, otherwise continue.
 
-
+#include "utils.h"
 #include <stdio.h>
-#include <math.h>
+
+#define INVALID_INPUT	2
 
 int main(void) {
 
 	//input
-	int lowInput;				// variable for user's lower / first input
-	int highInput;				// variable for user's higher / second input
-	int lowInputChecker;		// checks that the input is an integer
-	int highInputChecker;		// checks that the input is an integer
-	printf("This program will produce a table of integers and their cubes, squares, and squareroots.\n");
-	printf("Please input an integer (between 5 & 25) as the lower range of the table: ");
-	lowInputChecker = scanf_s("%d", &lowInput);
-	printf("Please input an integer (between 5 & 25) as the upper range of the table: ");
-	highInputChecker = scanf_s("%d", &highInput);
+	int firstInput;				// variable for user's lower / first input
+	int secondInput;				// variable for user's higher / second input
+	int inputChecker;		// checks that the input is an integer
 
-	if (lowInputChecker != 1) {		// checking for integer input
-		printf("Your first input was invalid. Please try again with an integer.\n");
+	printf("This program will produce a table of integers and their cubes, squares, and squareroots.\n\n");
+	printf("Please input an integer (between 5 & 25) for the lower range of the table: ");
+	inputChecker = scanf_s("%d", &firstInput);
+	if (inputChecker != 1) {		// checking for integer input
+		printf("\nYour first input was invalid. Please try again with an integer.\n");
+		return INVALID_INPUT;
 	}
-	else if (lowInput < 5) {		// checking if input is less than 5
-		printf("Your first input was too small. Try a bigger number.\n");
-	}
-	if (highInputChecker != 1) {	// checking for integer input
-		printf("Your second input was invalid. Please try again with an integer.\n");
-	}
-	else if (highInput > 25) {		// checking if input is less than 5
-		printf("Your second input was too large. Try a smaller number.\n");
-	}
-	if (lowInput > highInput) {
-		printf("Your second input was larger than your first input.\n");
-		printf("Please try again making the second input larger than the first.");
+	printf("Please input an integer (between 5 & 25) for the upper range of the table: ");
+	inputChecker = scanf_s("%d", &secondInput);
+	if (inputChecker != 1) {	// checking for integer input
+		printf("\nYour second input was invalid. Please try again with an integer.\n");
+		return INVALID_INPUT;
 	}
 
+	if (firstInput > secondInput) {
+		inputSort(&firstInput, &secondInput);
+	}
+
+	//input validation
+	int lowValidator = lowInputValidator(firstInput);
+	int highValidator = highInputValidator(secondInput);
 
 	//processing & output
-	int i;			// counting variable - starting at lower input terminating at higher input
-
-	if (lowInput >= 5 && highInput <= 25) {		// checking user input is within parameters 5 & 25 
-												//to execute the for loop
-		printf(" _________________________________________\n");
-		for (i = lowInput; i <= highInput; i++) {	// creates a table where each line is comprised of integer, cube, squared, squareroot
-			int iCubed = i * i * i;
-			int iSquared = i * i;
-			float iSquareRoot = sqrtf((float)i);
-			
-			printf("| %d  |  %d  |  %d  |  %f  |\n", i, iCubed, iSquared, iSquareRoot);
-			printf(" _________________________________________\n");
-		}
+	if (lowValidator == 1 && highValidator == 1) {		// checking user input is within parameters 5 & 25 
+		createTable(firstInput, secondInput);
 	}
 
 	return 0;
